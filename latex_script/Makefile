@@ -29,7 +29,7 @@ INFO = [INFO]
 %.pdf : %.tex
 	@echo ${INFO} Generating PDF
 	@echo ${INFO} PDFLaTeX running...
-	pdflatex $(basename $<) -quiet
+	pdflatex $< -quiet
 	@echo ${INFO} BibTeX running...
 	bibtex $(basename $<) -quiet
 	@echo ${INFO} $< generated.
@@ -49,3 +49,4 @@ clean:
 	@$(RM) *.ind
 	@$(RM) *.bbl
 	@$(RM) *.blg
+	@$(RM) *.pdf
