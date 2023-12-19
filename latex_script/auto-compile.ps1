@@ -11,6 +11,8 @@ Invoke-Expression "make $latex_project_name.pdf -B"
 while (1) {
 	Write-Host "Clearing screen..."
 	Clear-Host
+	Write-Host "Clear the directory..."
+	Invoke-Expression "make clean"
 	Write-Host "Compiling..."
 	Invoke-Expression "make $latex_project_name.pdf -B"
 	Write-Host "Available files:"

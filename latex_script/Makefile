@@ -28,11 +28,15 @@ INFO = [INFO]
 # Generate PDF
 %.pdf : %.tex
 	@echo ${INFO} Generating PDF
-	@echo ${INFO} PDFLaTeX running...
+	@echo ${INFO} PDFLaTeX running (generating temp files)...
 	pdflatex $< -quiet
 	@echo ${INFO} BibTeX running...
-	bibtex $(basename $<) -quiet
-	@echo ${INFO} $< generated.
+	bibtex "$(basename $<)" -quiet
+	@echo ${INFO} LaTex running...
+	latex $< -quiet
+	@echo ${INFO} PDFLateX running (generating PDF)...
+	pdflatex $< -quiet
+	@echo ${INFO} $< PDF generated.
 
 # Clean up
 clean:
