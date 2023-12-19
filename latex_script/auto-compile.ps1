@@ -1,16 +1,13 @@
 $sleep_time = 5
 $latex_project_name = "report"
 
-Write-Host "Clearing screen..."
 Clear-Host
-Write-Host "Clear the directory..."
-Invoke-Expression "make clean"
-Write-Host "Compile for the first time..."
-Invoke-Expression "make $latex_project_name.pdf -B"
 
 while (1) {
 	Write-Host "Clearing screen..."
 	Clear-Host
+	Write-Host "Auto-compile script for LaTeX"
+	Write-Host "Project name: $latex_project_name"
 	Write-Host "Clear the directory..."
 	Invoke-Expression "make clean"
 	Write-Host "Compiling..."
