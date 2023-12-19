@@ -1,4 +1,4 @@
-$sleep_time = 10
+$sleep_time = 5
 $latex_project_name = "report"
 
 Write-Host "Clearing screen..."
@@ -16,6 +16,7 @@ while (1) {
 	Write-Host "Available files:"
 	Invoke-Expression "ls -l"
 	Write-Host "You can view generated PDF in path: $(Get-Location)\$latex_project_name.pdf"
+	Write-Host "If you use zathura, use shift+R to reload the PDF file."
 	Write-Host "Sleeping for $sleep_time seconds..."
 	Start-Sleep $sleep_time
 }
