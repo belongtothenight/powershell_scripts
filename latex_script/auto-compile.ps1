@@ -18,7 +18,7 @@ while (1) {
 	Write-Host "If you use zathura, use shift+R to reload the PDF file."
 	#Start-Sleep $sleep_time
 	while ($sleep_time -gt 0) {
-		Write-Host "Sleeping for $sleep_time seconds..."
+		Write-Host -NoNewline "`rSleeping for $sleep_time seconds..."
 		Start-Sleep 1
 		$sleep_time = $sleep_time - 1
 	}
