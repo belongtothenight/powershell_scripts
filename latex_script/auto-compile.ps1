@@ -3,6 +3,8 @@ $latex_project_name = "report"
 
 Write-Host "Clearing screen..."
 Clear-Host
+Write-Host "Clear the directory..."
+Invoke-Expression "make clean"
 Write-Host "Compile for the first time..."
 Invoke-Expression "make $latex_project_name.pdf -B"
 Write-Host "Open PDF..."
