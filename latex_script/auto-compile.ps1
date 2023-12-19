@@ -19,6 +19,11 @@ while (1) {
 	Invoke-Expression "ls -l"
 	Write-Host "You can view generated PDF in path: $(Get-Location)\$latex_project_name.pdf"
 	Write-Host "If you use zathura, use shift+R to reload the PDF file."
-	Write-Host "Sleeping for $sleep_time seconds..."
-	Start-Sleep $sleep_time
+	#Start-Sleep $sleep_time
+	while ($sleep_time -gt 0) {
+		Write-Host "Sleeping for $sleep_time seconds..."
+		Start-Sleep 1
+		$sleep_time = $sleep_time - 1
+	}
+	$sleep_time = 5
 }
