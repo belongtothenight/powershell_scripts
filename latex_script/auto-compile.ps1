@@ -12,8 +12,8 @@ while (1) {
 	Clear-Host
 	Write-Host "Auto-compile script for LaTeX" @output_format
 	Write-Host "Project name: $latex_project_name" @output_format
-	Write-Host "Clear the directory..." @output_format
-	Invoke-Expression "make clean"
+	# Write-Host "Clear the directory..." @output_format
+	# Invoke-Expression "make clean"
 	Write-Host "Compiling..." @output_format
 	Invoke-Expression "make $latex_project_name.pdf -B"
 	Write-Host "Available files:" @output_format
