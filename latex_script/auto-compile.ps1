@@ -10,12 +10,14 @@ $output_format_warn = @{
 }
 
 $RunTime = [System.Diagnostics.Stopwatch]::StartNew()
+$exe_cnt = 0
 Clear-Host
 Write-Host "Auto-compile script for LaTeX" @output_format_info
 
 while (1) {
 	Write-Host "Clearing screen..." @output_format_info
 	Clear-Host
+	$exe_cnt += 1
 	$SingleTime = [System.Diagnostics.Stopwatch]::StartNew()
 	# Write-Host "Clear the directory..." @output_format_info
 	# Invoke-Expression "make clean"
@@ -29,6 +31,7 @@ while (1) {
 	$ElapsedTime = $RunTime.Elapsed
 	Write-Host "Compiling time:               $([string]::Format("{0:d2}:{1:d2}:{2:d2}", $CurrentTime.hours, $CurrentTime.minutes, $CurrentTime.seconds))" @output_format_info
 	Write-Host "Script has been running for:  $([string]::Format("{0:d2}:{1:d2}:{2:d2}", $ElapsedTime.hours, $ElapsedTime.minutes, $ElapsedTime.seconds))" @output_format_info
+	Write-Host "Script compiled count:        $exe_cnt" @output_format_info
 	Write-Host "Project name:                 $latex_project_name" @output_format_info
 	Write-Host "PDF filepath:                 $(Get-Location)\$latex_project_name.pdf" @output_format_info
 	Write-Host "Ref filepath:                 $(Get-Location)\$latex_project_name.bib" @output_format_info # reference filename is based on latex code
