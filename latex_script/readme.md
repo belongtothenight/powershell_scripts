@@ -1,4 +1,4 @@
-# Windows LaTex Auto Compile Script
+# Windows LaTeX Auto Compile Script
 
 ## Requirement
 
