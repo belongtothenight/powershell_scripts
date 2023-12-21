@@ -27,12 +27,13 @@ Prepare your working directory like this. Run ```./auto-compile.ps1```.
 
 ## Notice
 
-Notice: This script is only for Windows PowerShell
-Notice: Running for a long time may cause memory leak
-Notice: Require Makefile and latex compile environment
-Notice: Loading PDF while compiling may cause error or segmentation fault
-Notice: If this script stucks at some point, try to press ctrl+c and restart it
-Notice: First run of this script won't number references correctly, but it will re-run automatically.
+1. This script is only for Windows PowerShell
+2. Running for a long time may cause memory leak
+3. Require Makefile and latex compile environment
+4. Loading PDF while compiling may cause error or segmentation fault
+5. If this script stucks at some point, try to press ctrl+c and restart it
+6. First run of this script won't number references correctly, but it will re-run automatically.
+7. This script can be modify into bash for compiling in linux environment.
 
 ## Demo
 
