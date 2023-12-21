@@ -1,0 +1,148 @@
+\documentclass[12pt]{report}
+\usepackage{geometry}
+\geometry{a4paper, left=2.0cm, right=2.0cm, top=2.0cm, bottom=2.0cm}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{subfigure}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage[hidelinks]{hyperref}
+\usepackage{listings}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{textcomp}
+\usepackage{CJKutf8}
+\renewcommand{\bibname}{References}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage{url}
+%\counterwithout{figure}{chapter}
+
+\begin{document}
+\begin{titlepage}
+    \begin{center}
+        \vspace*{2cm}
+        \Large
+        \textbf{Seminar Presentation Report} \\
+        \vspace{1.5cm}
+        Report About Journal Paper \cite{8274922} \\
+		When Intrusion Detection Meets Blockchain Technology: A Review
+        \vspace{1.5cm}
+		\begin{CJK*}{UTF8}{bsmi}
+        電機碩一 11278041 陳大荃
+		\end{CJK*}
+        \vfill
+        Department of Electrical Engineering\\
+        \vspace{0.2cm}
+        Chung Yuan Christian University\\
+        \vspace{0.2cm}
+		\date{\today}
+        \normalsize
+    \end{center}
+\end{titlepage}
+\tableofcontents
+\listoffigures
+\listoftables
+
+\chapter{Background Introduction}
+This journal paper introduced the general usages and techniques used for Intrusion Detection System (IDS) researches, list out the methology adopted in order to overcome computation that can't be performed with single IDS, mention the difficulties they face, possible solution with adopting blockchain technology, and its challenges and future developments. \\
+
+In this report, background information about IDS and blockchain technologies will first be introduced in this chapter. Chapter 2 will explain how the proposed system integrates. Chapter 3 will list out challenges and research or development directions for IDS systems integrated with blockchain. \\
+
+In this chapter, I will first introduce intrusion attacks mentioned in this paper, following with introduction of Intrusion Detection System (IDS), and lastly describe the technology of blockchain. 
+
+\section{Intrusion Attack}
+\subsection{Betrayal Attack}
+\subsection{Collusion Attack}
+\subsection{Distributed Denial-of-Service Attack}
+\subsection{Double-Spend Attack}
+\subsection{Insider Attack}
+\subsection{Newcomer Attack}
+\subsection{Passive Message Fingerprint Attack}
+\subsection{Simultaneous Attack}
+\subsection{Sybil Attack}
+
+\section{IDS}
+Intrusion Detection System (IDS) \cite{NISRRIDPS} are deployed in many environmnets for minoring system status and sounds the alert when any anomaly situation happens in systems. Often IDSs are used to detect any malicious manipulation on system/program files intending to disable certain functionality or even paralyze it. Due to the attacks IDSs has to face can cause huge influence and distruction, the accuracy and response time becomes really crucial. Two major tasks IDS performs is information recording and alert generation. \\
+
+On the other hand, if we implement more rules to check or increase the size of system too much, a single IDS unit can be overwhelmed and dramatically increase the response time. The lengthened response time makes attackers have enough time to cause damages to the system. Therefore people uses a group of IDSs to process and monitor a system to keep the detection latency down, called Collaborative Intrusion Detection System (CIDS) or Collaborative Intrusion Detection Network (CIDN). However, this makes proving the validity of each IDS very importent. If attackers can fake a IDS unit and mislead the decision of CIDS/CIDN, like insider attacks, then the system will no longer be functional. This paper focuses on the CIDS/CIDN validating/trusting issue and proposed to use blockchain as potential solution. \\
+
+If we categorize IDS with deployed environment, they can be generally divided into Host-based IDS (HIDS) and Network-based IDS (NIDS), as shown in Fig \ref{fig:jf1}. \cite{McAfee_next_gen_IDS}\cite{wiki_IDS}\cite{wiki_HIDS} HIDS, originally targetting main frame computers, monitors dynamic behavior and the state of a computer system. NIDS, monitors and analysis passing traffic on the entire subnet. \\
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{../img/jf1.png}
+	\caption{Deploy environment of HIDS and NIDS.}
+	\label{fig:jf1}
+\end{figure}
+
+If we categorize with detection approaches, they can be divided into Signature-based IDS (SIDS) and Anomaly-based IDS (AIDS). \cite{wiki_IDS} SIDS looks for attacks by specific patters like network traffic byte sequences, file metadata, and process behavior. AIDS uses information from application and hardware to find anomaly acitivities in system. \\
+
+If we groups a network of IDS together to enhance detection capability, they can be called Collaborative Intrusion Detection System (CIDS) or Collaborative Intrusion Detection Network (CIDN), as shown in Fig \ref{fig:jf2}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{../img/jf2.png}
+	\caption{Typical architecture of CIDS/CIDN.}
+	\label{fig:jf2}
+\end{figure}
+
+\subsection{HIDS}
+HIDS executes on devices on the network and monitors inbound and outbound packets, takes snapshot of existing system files and matches with previous snapshot, and must more methods to detects security events. Once such events occurs, it can take immediate action to block certain process, stop network traffic, and notify administrator to perform further investigations.
+
+\subsection{NIDS}
+NIDS usually are deployed on network gateway to both monitor and collects information of all traffic comming through. With the deployed location privilege, it can monitors the entire subnet and protect them.
+
+\subsection{SIDS}
+SIDS is effective in detecting known exploits with information gathered from known attacks. However, this means its database needs to be constantly updated and populated with newest signatures. SIDS won't be effective on detecting unseen threats or variants of known threats.
+
+\subsection{AIDS}
+AIDS works by building a normal profile of the monitoring system. If any circumstances deviate from the normal profile, AIDS can classify it as an anomaly. The normal profile can be build statically and dynamically. However, building of these profile means we need the system to be in a stable state, which can be difficult for some systems which perform lots of actions whenever being triggered.
+
+\subsection{CIDSs/CIDNs}
+If a single IDS isn't sufficient for the target system, we can combine multiple IDS to become CIDS/CIDN. These IDS networks can spreads the computation load to multiple devices and gather a lot more information from the target protecting system. Ideally this can decrease computation needed for each individual IDS and decrease detection latency for large systems. However, as the originally singla unit being split into multiple different units, this makes CIDS/CIDN vulnerable to attacks like Dos or DDoS, insider attacks, betrayal attacks and such. Basically, attacker can bring down CIDS/CIDN by overloading its network communication, or can fake the communication between individual units making attacks possible. \\
+
+Traditionally collaboration system can be divided into following three categories:
+\begin{enumerate}
+	\item{Hierarchical collaboration system} These systems puts the role of decision maker to a single unit. Like EMERALD \cite{emerald-niss97} and DIDS \cite{Snapp1997DIDSI}.
+	\item{Subscribe collaboration system} These systems subscribes to other intrusion detection systems online as backbone to obtain latest info on new attacks. Like COSSACK \cite{COSSACK} and DOMINO \cite{DOMINO}.
+	\item{Peer-to-peer (P2P) query-based system}
+\end{enumerate}
+
+\section{Blockchain}
+\subsection{Permissionless Blockchains}
+\subsection{Permissioned Blockchains}
+\subsection{Consensus Protocols}
+1. Proof of Work
+2. Proof of Stake
+3. Proof of Elapsed Time
+
+\chapter{IDS with Blockchain}
+\section{Challenges in CID}
+\subsection{Data sharing}
+\subsection{Trust management}
+\section{Blockchain-based solutions}
+\subsection{data privacy}
+\subsection{trust computation}
+\section{Scope of Application for Blockchains}
+
+\chapter{Challenges and Future Trends}
+\section{Challenges and Limitations}
+\subsection{Overhead Traffic with Limited Handling Capability}
+\subsection{Limited Signature Coverage}
+\subsection{Inaccurate Profile Establishment}
+\subsection{Massive False Alerts}
+\subsection{Energy and Cost}
+\subsection{Security and Privacy}
+\subsection{Latency and Complexity}
+\subsection{Awareneess and Adoption}
+\subsection{Organization and Size}
+\section{Future Directions}
+\subsection{Major Applications}
+1. Data sharing
+2. Alert Exchange
+3. Trust Computation
+\subsection{Regulations and Management}
+
+\bibliography{report}
+\bibliographystyle{unsrt}
+\end{document}

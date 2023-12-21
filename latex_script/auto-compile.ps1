@@ -1,3 +1,9 @@
+# Notice: This script is only for Windows PowerShell
+# Notice: Running for a long time may cause memory leak
+# Notice: Require Makefile and latex compile environment
+# Notice: Loading PDF while compiling may cause error or segmentation fault
+# Notice: If this script stucks at some point, try to press ctrl+c and restart it
+
 $sleep_time = 5
 $latex_project_name = "report"
 $output_format_info = @{
@@ -13,14 +19,14 @@ $RunTime = [System.Diagnostics.Stopwatch]::StartNew()
 $exe_cnt = 0
 Clear-Host
 Write-Host "Auto-compile script for LaTeX" @output_format_info
+Write-Host "Clear the directory..." @output_format_info
+Invoke-Expression "make clean"
 
 while (1) {
 	Write-Host "Clearing screen..." @output_format_info
 	Clear-Host
 	$exe_cnt += 1
 	$SingleTime = [System.Diagnostics.Stopwatch]::StartNew()
-	# Write-Host "Clear the directory..." @output_format_info
-	# Invoke-Expression "make clean"
 	Write-Host "Compiling..." @output_format_info
 	Invoke-Expression "make $latex_project_name.pdf -B"
 	Write-Host "Available files:" @output_format_info
