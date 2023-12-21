@@ -10,7 +10,7 @@
 
 1. [```auto-compile.ps1```](./auto-compile.ps1): Compilation script which recompiles PDF with MikTeX, feel free to adjust settings at the start of the script.
 2. [```Makefile```](./Makefile): Making commands. Should not be edited.
-3. [```readme.md```]: This file.
+3. [```readme.md```](./readme.md): This file.
 
 ## Usage
 
