@@ -38,3 +38,13 @@ Prepare your working directory like this. Run ```./auto-compile.ps1```.
 ## Demo
 
 1. Commit: [b2772dc07c5df5bc8585c2b61df7ef5f9ee96e9d](https://github.com/belongtothenight/powershell_scripts/tree/b2772dc07c5df5bc8585c2b61df7ef5f9ee96e9d/latex_script) -> <https://youtu.be/_9wYpF_tkdQ>
+
+## Documentation about LaTeX
+
+1. BibTeX: referencing -> <https://bibtex.eu/>
+2. Overleaf: LaTeX syntax -> <https://www.overleaf.com/learn>
+3. LaTeX mathematical symbols -> 
+    1. <https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols> 
+    2. <https://www.cmor-faculty.rice.edu/~heinken/latex/symbols.pdf> 
+    3. <http://www.cs.put.poznan.pl/ksiek/latexmath.html>
+4. Paper Referencing -> <https://research.com/research/how-to-cite-a-research-paper>
