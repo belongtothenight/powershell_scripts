@@ -16,6 +16,7 @@
 \usepackage{mathptmx}
 \usepackage{url}
 %\counterwithout{figure}{chapter}
+\pagenumbering{roman}
 
 \begin{document}
 \begin{titlepage}
@@ -41,9 +42,12 @@
 \end{titlepage}
 \tableofcontents
 \listoffigures
-\listoftables
+%\listoftables
 
 \chapter{Background Introduction}
+
+\pagenumbering{arabic}
+
 This journal paper introduced the general usages and techniques used for Intrusion Detection System (IDS) researches, list out the methology adopted in order to overcome computation that can't be performed with single IDS, mention the difficulties they face, possible solution with adopting blockchain technology, and its challenges and future developments. \\
 
 In this report, background information about IDS and blockchain technologies will first be introduced in this chapter. Chapter 2 will explain how the proposed system integrates. Chapter 3 will list out challenges and research or development directions for IDS systems integrated with blockchain. \\
@@ -51,18 +55,25 @@ In this report, background information about IDS and blockchain technologies wil
 In this chapter, I will first introduce intrusion attacks mentioned in this paper, following with introduction of Intrusion Detection System (IDS), and lastly describe the technology of blockchain. 
 
 \section{Intrusion Attack}
+Intrusion Attacks are attacks attempting to intrude target system to take secret information or disable certain functionality. Numerous risks intrusion attacks can cause includes corruption of data, financial loss for the organization, theft of data, operational disruption, and loss of reputation \cite{zenarmor_network_intrusion}. A lot of the following attacks focuses on the trust management system on peer-to-peer network of IDS.
+
 \subsection{Betrayal Attack}
+Intruder modify and alternate functionality of a trusted node to mislead the system. This can degrade the trust management system performance dramatically \cite{5188784}.
+
 \subsection{Collusion Attack}
+Intruder create/modify multiple nodes and making them into malicious ones. These nodes can cooperate together by providing false alert rankings in order to compromise the network. \cite{5188784} One example of such is passive message fingerprint attacks \cite{Li2016PMFATP}.
+
 \subsection{Distributed Denial-of-Service Attack}
-\subsection{Double-Spend Attack}
-\subsection{Insider Attack}
+Distributed Denial-of-Service Attack (DDoS) in general is by using a horde of computers to send request too many for the target system to handle, making it unable to respond to legitimate request. As for NIDS/CIDS, intruder can manipulate lots of nodes to send large amount of request to paralyze its functionality.
+
 \subsection{Newcomer Attack}
-\subsection{Passive Message Fingerprint Attack}
-\subsection{Simultaneous Attack}
+Intruder can use a malicious peer to register as a new user \cite{5188784}. New ID generated can prevent bad history recorded and can influence the trust management system.
+
 \subsection{Sybil Attack}
+Intruder modify a node to generate a large amount of fake identities to gain larger influence over the false ranking on others in the network \cite{5188784} \cite{10.1007/3-540-45748-8_24}.
 
 \section{IDS}
-Intrusion Detection System (IDS) \cite{NISRRIDPS} are deployed in many environmnets for minoring system status and sounds the alert when any anomaly situation happens in systems. Often IDSs are used to detect any malicious manipulation on system/program files intending to disable certain functionality or even paralyze it. Due to the attacks IDSs has to face can cause huge influence and distruction, the accuracy and response time becomes really crucial. Two major tasks IDS performs is information recording and alert generation. \\
+Intrusion Detection System (IDS) \cite{NIST_IDPS} are deployed in many environmnets for minoring system status and sounds the alert when any anomaly situation happens in systems. Often IDSs are used to detect any malicious manipulation on system/program files intending to disable certain functionality or even paralyze it. Due to the attacks IDSs has to face can cause huge influence and distruction, the accuracy and response time becomes really crucial. Two major tasks IDS performs is information recording and alert generation. \\
 
 On the other hand, if we implement more rules to check or increase the size of system too much, a single IDS unit can be overwhelmed and dramatically increase the response time. The lengthened response time makes attackers have enough time to cause damages to the system. Therefore people uses a group of IDSs to process and monitor a system to keep the detection latency down, called Collaborative Intrusion Detection System (CIDS) or Collaborative Intrusion Detection Network (CIDN). However, this makes proving the validity of each IDS very importent. If attackers can fake a IDS unit and mislead the decision of CIDS/CIDN, like insider attacks, then the system will no longer be functional. This paper focuses on the CIDS/CIDN validating/trusting issue and proposed to use blockchain as potential solution. \\
 
@@ -71,7 +82,7 @@ If we categorize IDS with deployed environment, they can be generally divided in
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{../img/jf1.png}
-	\caption{Deploy environment of HIDS and NIDS.}
+	\caption{Deploy environment of HIDS and NIDS. \cite{8274922}}
 	\label{fig:jf1}
 \end{figure}
 
@@ -82,7 +93,7 @@ If we groups a network of IDS together to enhance detection capability, they can
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{../img/jf2.png}
-	\caption{Typical architecture of CIDS/CIDN.}
+	\caption{Typical architecture of CIDS/CIDN. \cite{8274922}}
 	\label{fig:jf2}
 \end{figure}
 
@@ -103,45 +114,154 @@ If a single IDS isn't sufficient for the target system, we can combine multiple 
 
 Traditionally collaboration system can be divided into following three categories:
 \begin{enumerate}
-	\item{Hierarchical collaboration system} These systems puts the role of decision maker to a single unit. Like EMERALD \cite{emerald-niss97} and DIDS \cite{Snapp1997DIDSI}.
-	\item{Subscribe collaboration system} These systems subscribes to other intrusion detection systems online as backbone to obtain latest info on new attacks. Like COSSACK \cite{COSSACK} and DOMINO \cite{DOMINO}.
-	\item{Peer-to-peer (P2P) query-based system}
+	\item{Hierarchical collaboration system}: These systems puts the role of decision maker to a single unit, centralized trusted server. Like EMERALD \cite{emerald-niss97} and DIDS \cite{Snapp1997DIDSI}.
+	\item{Subscribe collaboration system}: These systems subscribes to other intrusion detection systems online as backbone to obtain latest info on new attacks. Like COSSACK \cite{COSSACK} and DOMINO \cite{DOMINO}.
+	\item{Peer-to-peer (P2P) query-based system}: Each individual nodes request data (trust related info) with each other. Like Netbait \cite{Netbait} and PIER \cite{PIER}.
 \end{enumerate}
 
 \section{Blockchain}
+
+Blockchain technology is the backbone of all of the cryptocurrencies. Its decentralized nature makes it works great with peer-to-peer network. Each node in the network will have a copy of the chain, and the overall confirmed result (transaction) is generated based on what majority of the chains records. The schematic of blockchain is shown in Figure \ref{fig:jf3}. \\
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{../img/jf3.png}
+	\caption{Schematic view of a blockchain. \cite{8274922}}
+	\label{fig:jf3}
+\end{figure}
+
+One of the downside of blockchain for maintaining its trust is to keep the entire chain of transaction record starting from the genesis block. If a lot of transactions are written into the chain, it will create a gigantic file for each and every nodes. To overcome this issue, individual transactions can be hashed by Merkle tree \cite{6233691} \cite{Bayer1993ImprovingTE}, as shown in Figure \ref{fig:jf4}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{../img/jf4.png}
+	\caption{Compact representation of Merkle tree. \cite{8274922}}
+	\label{fig:jf4}
+\end{figure}
+
 \subsection{Permissionless Blockchains}
+
+This category of blockchain does not limit read and write permission at all. Anyone connected to the network will be able to have full access to the entire chain. This type of blockchain is usually used for services available for public and can be validate whenever needed. Famous example using this technology is Bitcoin and ethereum.
+
 \subsection{Permissioned Blockchains}
+
+This category of blockchain limits write permission to all users (nodes) in the network. Furthermore, with restriction to read permission, it can be subdivided into public permissioned blockchains and private permissioned blockchains. These types of blockchains is often used within private organization to leverage its safety nature if multiple ones in network exists. Famous usage of this technology is hyperledger.
+
 \subsection{Consensus Protocols}
-1. Proof of Work
-2. Proof of Stake
-3. Proof of Elapsed Time
+
+The following three protocols enables the blockchain to function.
+
+\begin{enumerate}
+	\item{Proof of Work}: This enforce a nodes to spend considerable resources to solve a puzzle. For field of IDS, this can be used to perform computation to detect attacks.
+	\item{Proof of Stake}: Stake, is how much influence a single node can have. This protocol allows nodes with higher stake to have more influence on the network.
+	\item{Proof of Elapsed Time}: The more resource a node has, the more it can contribute to the network. This protocol allows nodes with more resource to have more influence on the network.
+\end{enumerate}
 
 \chapter{IDS with Blockchain}
+
+In this chapter, we will first discuss what challenges the Collaborative Intrusion Detection (CIS) technology is facing, then we will discuss how blockchain can be used to overcome these challenges.
+
 \section{Challenges in CID}
+
+Two major challenges are listed by the authors of this paper despite this field has been studied for nearly 40 years at the time of writing.
+
 \subsection{Data sharing}
+
+Real world scenario or environment is essential for developing such CID technology and continue to improve it. However, due to the nature of the field, these CIDN/CIDS usually guards data that needs to have up most privacy to private entities. One the other hand, both parties in CID technology development and environment provider might not be able to trust each other for security reason. Without the environment and data, optimization of detection algorithms can be hardly applicable in real world scenario.
+
 \subsection{Trust management}
+
+With the researches done in this domain, trust management system accross the entire network is often used to determine the trustworthiness of a node. With the need of a absolute trusted node, in practice, it is usually implemented with a centralized server. This makes the network having a single point of failure, and can be disabled with attacks focusing the centralized trusted server.
+
 \section{Blockchain-based solutions}
-\subsection{data privacy}
-\subsection{trust computation}
+
+Blockchain can be implemented in peer-to-peer network without the need for a absolute trusted node. It also makes attacking single node in the network have a lot less significant affect, since the majority of the nodes needs to be modified to be able to change the overall record recorded on blockchain network.
+
+\subsection{Data Privacy}
+
+With blockchain technology, it is possible to share nearly no information when performing transaction. No IP addresses and packet payloads needs to be recorded. Also, both parties can have certain agreement on data-sharing or storaging to manipulate the data before transmittion, making only the two parties can have access to the data.
+
+\subsection{Trust Computation}
+
+Alert exchange in CIDN/CIDS is extreme importent, helping the decision of anomaly. These alerts can be regarded as transaction and stored on blockchain to leverage benefits blockchains provide.
+
 \section{Scope of Application for Blockchains}
 
+Devide with read and write permission limitation, blockchain can be divided into permissionless and permissioned blockchains. Researchers have proposed a decision schematic \cite{8525392} for different use cases as shwon in Figure \ref{fig:jf5}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{../img/jf5.png}
+	\caption{Schematic blockchain type decision diagram. \cite{8274922}}
+	\label{fig:jf5}
+\end{figure}
+
+%\addtocontents{toc}{\protect\newpage} % Add page break in a "Chapter" entry in ToC
+
 \chapter{Challenges and Future Trends}
+
+In this chapter, we will discuss the challenges and trends of adopting blockchain technology in CIDN/CIDS.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../img/jf6.png}
+	\caption{Challenges and limitations of blockchain technology. \cite{8274922}}
+	\label{fig:jf6}
+\end{figure}
+
 \section{Challenges and Limitations}
+
+Blockchain technology can be used to solve some of the challenges CIDN/CIDS faces, but it also brings new challenges and limitation due to its nature.
+
 \subsection{Overhead Traffic with Limited Handling Capability}
+
+Since blockchain works with huge amount of data exchanging, the increased network traffic can overload a IDS node computation capability.
+
 \subsection{Limited Signature Coverage}
+
+For signature-based detection methods, newest and most accurate signatures are essential for good detection result. This means the detection performance is still limited to the number and quality of deployed signatures. These signature, however, can be hard to acquire.
+
 \subsection{Inaccurate Profile Establishment}
+
+For anomaly-based detection methods, the difficulty of creating accurate normal and abnormal profiles is still a challenge, and is not solved by blockchain technology.
+
 \subsection{Massive False Alerts}
+
+If the detection algorithm is not well designed and implemented, large amount of false alerts can be generated. This can become a huge burden for security analysts to frequently inspect the system for any anomaly.
+
 \subsection{Energy and Cost}
+
+Just like other services created with blockchain (like cryptocurrencies), the energy and cost consumption is still a huge problem. This is due to the nature of blockchain, where a lot of computation is needed to maintain the network.
+
 \subsection{Security and Privacy}
+
+Smart transactions used for many existing blockchain-related applications may leak sensitive information. Also, since the blockchain heavily relies on the network, it can be attacked with DDoS without manipulating algorithms.
+
 \subsection{Latency and Complexity}
+
+Since blockchain is decentralized, it might takes hours for the entire network to update the chain. This can be a problem for real-time applications, like IDS.
+
 \subsection{Awareneess and Adoption}
+
+Awareness of the blockchain technology is the key for adoption in the field of IDS. However, many people are still short of understanding of the technology.
+
 \subsection{Organization and Size}
-\section{Future Directions}
-\subsection{Major Applications}
-1. Data sharing
-2. Alert Exchange
-3. Trust Computation
+
+If the size of the network grows larger, it can degrades the performance of blockchain technology.
+
 \subsection{Regulations and Management}
+
+Since blockchain is a new technology, there are no regulations and management for it. Organizations might bypass some of the regulations for better efficiency, making blockchain application works in unideal situation.
+
+\section{Future Directions}
+
+With the development of blockchain technology, it is possible to overcome some of the challenges and limitations listed above. Below are the the major applications this technology can be helpful.
+
+\begin{enumerate}
+	\item{Data Sharing}: Blockchain is suitable for handeling event logging and transaction processing. It has great potential when performance and data privacy is improved.
+	\item{Alert Exchange}: Just like data sharing, alerts can be recorded on blockchain to leverage its benefits.
+	\item{Trust Computation}: With alert exchange recorded on blockchain, trust computation can be performed based on these records to determine the trustworthiness of a node.
+\end{enumerate}
 
 \bibliography{report}
 \bibliographystyle{unsrt}
