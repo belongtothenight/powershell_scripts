@@ -25,6 +25,8 @@ Prepare your working directory like this. Run ```./auto-compile.ps1```.
     └── report.tex
 ```
 
+Notice, the sample tex file won't be able to compile since included image is not presented. You can comment out figures to do so.
+
 ## Notice
 
 1. This script is only for Windows PowerShell
