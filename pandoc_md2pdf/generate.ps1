@@ -1,6 +1,34 @@
+<#
+.SYNOPSIS
+    Generate a PDF file from a Markdown file using PanDoc.
+.DESCRIPTION
+    1. Output directory
+    2. Create the output directory if it does not exist
+    3. Remove the output file if it exists
+    4. Active PanDoc
+    5. Open the file
+.PARAMETER i
+    Input file
+.PARAMETER d
+    Output directory
+.PARAMETER t
+    Output type
+.PARAMETER o
+    Output file name (without extension)
+.EXAMPLE
+    C:\PS> .\generate.ps1 -i w1.md -d pdf -t pdf -o w1
+.NOTES
+    File Name      : generate.ps1
+    Author         : belongtothenight
+    Prerequisite   : PanDoc
+    Date           : 2024-02-28
+    Version        : 1.0
+#>
+
 # https://stackoverflow.com/questions/18178084/pandoc-and-foreign-characters
 # https://stackoverflow.com/questions/2157554/how-to-handle-command-line-arguments-in-powershell
 # https://stackoverflow.com/questions/16906170/create-directory-if-it-does-not-exist
+# https://stackoverflow.com/questions/5237723/how-do-i-get-help-messages-to-appear-for-my-powershell-script-parameters
 
 param (
 [Parameter(Mandatory=$true)][string]$i = "w1.md", # input file
