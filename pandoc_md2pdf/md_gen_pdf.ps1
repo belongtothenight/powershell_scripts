@@ -68,6 +68,7 @@ pandoc `
   --pdf-engine=xelatex `
   -V CJKmainfont="Microsoft JhengHei" `
   -V geometry:margin=0.5in `
+  --verbose `
 
 # Open the file
 Write-Host ">> Opening the file"
