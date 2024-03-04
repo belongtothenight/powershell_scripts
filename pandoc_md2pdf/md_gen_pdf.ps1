@@ -16,9 +16,9 @@
 .PARAMETER o
     Output file name (without extension)
 .EXAMPLE
-    C:\PS> .\generate.ps1 -i w1.md -d pdf -t pdf -o w1
+    C:\PS> .\md_gen_pdf.ps1 -i w1.md -d pdf -t pdf -o w1
 .NOTES
-    File Name      : generate.ps1
+    File Name      : md_gen_pdf.ps1
     Author         : belongtothenight
     Prerequisite   : PanDoc
     Date           : 2024-02-28
