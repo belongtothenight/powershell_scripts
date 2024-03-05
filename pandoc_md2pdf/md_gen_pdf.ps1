@@ -17,8 +17,33 @@
     Output type
 .PARAMETER o
     Output file name (without extension)
+.INPUTS
+    None
+.OUTPUTS
+    None
 .EXAMPLE
-    C:\PS> .\md_gen_pdf.ps1 -i w1.md -d pdf -t pdf -o w1
+    PS> .\md_gen_pdf.ps1 -i w1.md -d pdf -t pdf -o w1
+    PS> dir
+    pdf/w1.md
+    pdf/w1_mt.md.tmp (deleted)
+    pdf/w1.pdf
+.EXAMPLE
+    PS> .\md_gen_pdf.ps1 -i server.md -d pdf -t pdf -o server
+    pdf/server.md
+    pdf/server_mt.md.tmp (deleted)
+    pdf/server.pdf
+.LINK
+    https://stackoverflow.com/questions/18178084/pandoc-and-foreign-characters
+.LINK
+    https://stackoverflow.com/questions/2157554/how-to-handle-command-line-arguments-in-powershell
+.LINK
+    https://stackoverflow.com/questions/16906170/create-directory-if-it-does-not-exist
+.LINK
+    https://stackoverflow.com/questions/5237723/how-do-i-get-help-messages-to-appear-for-my-powershell-script-parameters
+.LINK
+    https://pandoc.org/MANUAL.html#tables
+.LINK
+    https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_comment_based_help?view=powershell-7.4
 .NOTES
     File Name      : md_gen_pdf.ps1
     Author         : belongtothenight
@@ -26,12 +51,6 @@
     Date           : 2024-02-28
     Version        : 1.0
 #>
-
-# https://stackoverflow.com/questions/18178084/pandoc-and-foreign-characters
-# https://stackoverflow.com/questions/2157554/how-to-handle-command-line-arguments-in-powershell
-# https://stackoverflow.com/questions/16906170/create-directory-if-it-does-not-exist
-# https://stackoverflow.com/questions/5237723/how-do-i-get-help-messages-to-appear-for-my-powershell-script-parameters
-# https://pandoc.org/MANUAL.html#tables
 
 param (
 [Parameter(Mandatory=$true)][string]$i = "w1.md", # input file
@@ -47,7 +66,7 @@ output type:      {2}`
 output file:      {3}"`
 -f $i, $d, $t, $o
 Write-Host $inputparams
-$tempfile = '{0}_mt.md' -f $i
+$tempfile = '{0}_mt.md.tmp' -f $i
 $outputfile = '{0}/{1}.{2}' -f $d, $o, $t
 
 # Create the output directory if it does not exist
