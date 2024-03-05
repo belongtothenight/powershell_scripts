@@ -122,5 +122,5 @@ if (Test-Path -Path $outputfile) {
 } else {
   Write-Host ">> PanDoc failed to generate the file"
   Write-Host ">> Please check the error message above"
-  Write-Host ">> Make sure `" characters are escaped with `\"
+  Write-Host ">> Make sure `" `' characters are escaped with `\"
 }
