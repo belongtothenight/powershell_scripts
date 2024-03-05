@@ -1,6 +1,3 @@
-# Ref: https://tex.stackexchange.com/questions/87319/how-to-run-tex-from-the-command-line-interface-in-linux
-# Ref: https://stackoverflow.com/questions/49384301/make-clean-failed-in-windows
-
 # Usage
 # 1. make <file.pdf> -B
 # 2. make clean; make <file.pdf>
