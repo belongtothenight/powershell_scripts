@@ -5,8 +5,10 @@
     1. Output directory
     2. Create the output directory if it does not exist
     3. Remove the output file if it exists
-    4. Active PanDoc
-    5. Open the file
+    4. Convert markdown table format to multiline_tables
+    5. Convert the markdown file to the output type
+    6. Remove the temporary file
+    7. Open the file
 .PARAMETER i
     Input file
 .PARAMETER d
@@ -44,6 +46,7 @@ output type:      {2}`
 output file:      {3}"`
 -f $i, $d, $t, $o
 Write-Host $inputparams
+$tempfile = '{0}_mt.md' -f $i
 $outputfile = '{0}/{1}.{2}' -f $d, $o, $t
 
 # Create the output directory if it does not exist
@@ -58,17 +61,25 @@ if (Test-Path -Path $outputfile) {
   Remove-Item -Path $outputfile
 }
 
+# Convert markdown table format to multiline_tables
+Write-Host ">> Converting markdown table format to multiline_tables"
+pandoc -t markdown-pipe_tables-simple_tables-pipe_tables $i -o $tempfile
+
 # Active PanDoc
-Write-Host ">> Activating PanDoc"
+Write-Host ">> Converting the markdown file to the output type"
 pandoc `
   -f markdown-implicit_figures `
   -t $t `
-  $i `
+  $tempfile `
   -o $outputfile `
   --pdf-engine=xelatex `
   -V CJKmainfont="Microsoft JhengHei" `
   -V geometry:margin=0.5in `
   --verbose `
+
+# Remove the temporary file
+Write-Host ">> Removing the temporary file"
+Remove-Item -Path $tempfile
 
 # Open the file
 Write-Host ">> Opening the file"
