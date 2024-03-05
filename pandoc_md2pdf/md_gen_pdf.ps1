@@ -2,7 +2,7 @@
 .SYNOPSIS
     Generate a PDF file from a Markdown file using PanDoc.
 .DESCRIPTION
-    1. Output directory
+    1. Check if PanDoc is installed
     2. Create the output directory if it does not exist
     3. Remove the output file if it exists
     4. Convert markdown table format to multiline_tables
@@ -44,6 +44,8 @@
     https://pandoc.org/MANUAL.html#tables
 .LINK
     https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_comment_based_help?view=powershell-7.4
+.LINK
+    https://stackoverflow.com/questions/8693675/check-if-a-command-has-run-successfully
 .NOTES
     File Name      : md_gen_pdf.ps1
     Author         : belongtothenight
@@ -69,24 +71,36 @@ Write-Host $inputparams
 $tempfile = '{0}_mt.md.tmp' -f $i
 $outputfile = '{0}/{1}.{2}' -f $d, $o, $t
 
+# Check if PanDoc is installed
+Write-Host ">> 1. Checking if PanDoc is installed"
+$pandoc_check = pandoc -v
+if ($?) {
+  Write-Host ">> PanDoc is installed"
+} else {
+  Write-Host ">> PanDoc is not installed"
+  Write-Host ">> Please install PanDoc"
+  Write-Host ">> https://pandoc.org/installing.html"
+  exit
+}
+
 # Create the output directory if it does not exist
-Write-Host ">> Creating the output directory if it does not exist"
+Write-Host ">> 2. Creating the output directory if it does not exist"
 if (!(Test-Path -Path $d)) {
   New-Item -ItemType Directory -Force -Path $d
 }
 
 # Remove the output file if it exists
-Write-Host ">> Removing the output file if it exists"
+Write-Host ">> 3. Removing the output file if it exists"
 if (Test-Path -Path $outputfile) {
   Remove-Item -Path $outputfile
 }
 
 # Convert markdown table format to multiline_tables
-Write-Host ">> Converting markdown table format to multiline_tables"
+Write-Host ">> 4. Converting markdown table format to multiline_tables"
 pandoc -t markdown-pipe_tables-simple_tables-pipe_tables $i -o $tempfile
 
 # Active PanDoc
-Write-Host ">> Converting the markdown file to the output type"
+Write-Host ">> 5. Converting the markdown file to the output type"
 pandoc `
   -f markdown-implicit_figures `
   -t $t `
@@ -98,11 +112,11 @@ pandoc `
   --verbose `
 
 # Remove the temporary file
-Write-Host ">> Removing the temporary file"
+Write-Host ">> 6. Removing the temporary file"
 Remove-Item -Path $tempfile
 
 # Open the file
-Write-Host ">> Opening the file"
+Write-Host ">> 7. Opening the file"
 if (Test-Path -Path $outputfile) {
   Start-Process $outputfile
 } else {
