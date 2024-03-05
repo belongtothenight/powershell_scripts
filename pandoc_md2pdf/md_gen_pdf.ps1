@@ -31,6 +31,7 @@
 # https://stackoverflow.com/questions/2157554/how-to-handle-command-line-arguments-in-powershell
 # https://stackoverflow.com/questions/16906170/create-directory-if-it-does-not-exist
 # https://stackoverflow.com/questions/5237723/how-do-i-get-help-messages-to-appear-for-my-powershell-script-parameters
+# https://pandoc.org/MANUAL.html#tables
 
 param (
 [Parameter(Mandatory=$true)][string]$i = "w1.md", # input file
