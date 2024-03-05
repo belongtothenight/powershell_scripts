@@ -103,4 +103,10 @@ Remove-Item -Path $tempfile
 
 # Open the file
 Write-Host ">> Opening the file"
-. $outputfile
+if (Test-Path -Path $outputfile) {
+  Start-Process $outputfile
+} else {
+  Write-Host ">> PanDoc failed to generate the file"
+  Write-Host ">> Please check the error message above"
+  Write-Host ">> Make sure `" characters are escaped with `\"
+}
