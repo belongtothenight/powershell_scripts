@@ -21,17 +21,15 @@
 .PARAMETER NoBib
     Whether to use BibTeX. Default is false.
 .EXAMPLE
-    PS> .\md_gen_pdf2.ps1 -MdFile "test.md"
+    .\md_gen_pdf2.ps1 -MdFile "test.md"
 .EXAMPLE
-    PS> .\md_gen_pdf2.ps1 -MdFile "test.md" -OutputDir "pdf"
+    .\md_gen_pdf2.ps1 -MdFile "test.md" -OutputDir "pdf"
 .EXAMPLE
-    PS> .\md_gen_pdf2.ps1 -MdFile "test.md" -OutputDir "pdf" -TempPath "tmp"
+    .\md_gen_pdf2.ps1 -MdFile "test.md" -OutputDir "pdf" -TempPath "tmp"
 .EXAMPLE
-    If you want to keep the temporary directory.
-    PS> .\md_gen_pdf2.ps1 -MdFile "test.md" -OutputDir "pdf" -NoRemoveTemp
+    .\md_gen_pdf2.ps1 -MdFile "test.md" -OutputDir "pdf" -NoRemoveTemp # If you want to keep the temporary directory.
 .EXAMPLE
-    If there is no BibTeX file.
-    PS> .\md_gen_pdf2.ps1 -MdFile "test.md" -OutputDir "pdf" -NoBib
+    .\md_gen_pdf2.ps1 -MdFile "test.md" -OutputDir "pdf" -NoBib # If there is no BibTeX file.
 .NOTES
     File Name       : md_gen_pdf2.ps1
     Author          : belongtothenight
