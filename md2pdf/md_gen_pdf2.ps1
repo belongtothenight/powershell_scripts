@@ -12,14 +12,26 @@
     8. Remove the temporary directory.
 .PARAMETER MdFile
     The input Markdown file.
-.PARAMETER RemoveTemp
-    Whether to remove the temporary directory. Default is true.
+.PARAMETER OutputDir
+    The output directory. Default is "pdf".
+.PARAMETER TempPath
+    The temporary directory. Default is "tmp".
+.PARAMETER NoRemoveTemp
+    Whether to remove the temporary directory. Default is false
+.PARAMETER NoBib
+    Whether to use BibTeX. Default is false.
 .EXAMPLE
     PS> .\md_gen_pdf2.ps1 -MdFile "test.md"
 .EXAMPLE
     PS> .\md_gen_pdf2.ps1 -MdFile "test.md" -OutputDir "pdf"
 .EXAMPLE
-    PS> .\md_gen_pdf2.ps1 -MdFile "test.md" -OutputDir "pdf" -RemoveTemp $false
+    PS> .\md_gen_pdf2.ps1 -MdFile "test.md" -OutputDir "pdf" -TempPath "tmp"
+.EXAMPLE
+    If you want to keep the temporary directory.
+    PS> .\md_gen_pdf2.ps1 -MdFile "test.md" -OutputDir "pdf" -NoRemoveTemp
+.EXAMPLE
+    If there is no BibTeX file.
+    PS> .\md_gen_pdf2.ps1 -MdFile "test.md" -OutputDir "pdf" -NoBib
 .NOTES
     File Name       : md_gen_pdf2.ps1
     Author          : belongtothenight
@@ -33,7 +45,8 @@ param (
     [Parameter(Mandatory=$true)][string]$MdFile,
     [string]$OutputDir = "pdf",
     [string]$TempPath = "tmp",
-    [bool]$RemoveTemp = $true
+    [switch]$NoRemoveTemp,
+    [switch]$NoBib
 )
 
 function Check-Command {
@@ -106,7 +119,11 @@ function If-Fail-Exit {
 Write-Host ">> Initialization ..."
 $RootWorkingDirectory = Get-Location
 $ProjName = [io.path]::GetFileNameWithoutExtension($MdFile)
-$BibFile = '{0}.bib' -f $ProjName
+if ($NoBib) {
+    $BibFile = $null
+} else {
+    $BibFile = '{0}.bib' -f $ProjName
+}
 $tempMdFile = '{0}.tmp.md' -f $ProjName
 $TexFile = '{0}.tex' -f $ProjName
 $tempTexFile = '{0}.tmp.tex' -f $ProjName
@@ -116,7 +133,8 @@ Write-Host ">> Input Arguments:"
 Write-Host "MD File:`t$MdFile"
 Write-Host "Output Dir:`t$OutputDir"
 Write-Host "Temp Path:`t$TempPath"
-Write-Host "Remove Temp:`t$RemoveTemp"
+Write-Host "Remove Temp:`t$NoRemoveTemp"
+Write-Host "No Bib:`t$NoBib"
 
 # [+] Check Installation
 Write-Host ">> Checking Installation ..."
@@ -129,7 +147,11 @@ Check-Command "bibtex"
 Write-Host ">> Checking existence ..."
 Check-Path-Create $OutputDir
 Check-Path-Exit   $MdFile
-Check-Path-Exit   $BibFile
+if ($NoBib) {
+    Write-Host "No BibTeX file is provided."
+} else {
+    Check-Path-Exit $BibFile
+}
 Check-File-Extension-Exit $MdFile ".md"
 
 # [+] Create Temporary Directory
@@ -139,7 +161,11 @@ New-Item -Path $TempPath -ItemType Directory -Force | Out-Null
 # [+] Copy Files to Temporary Directory
 Write-Host ">> Copying Files to Temporary Directory ..."
 Copy-Item $MdFile -Destination $TempPath
-Copy-Item $BibFile -Destination $TempPath
+if ($NoBib) {
+    Write-Host "No BibTeX file is provided."
+} else {
+    Copy-Item $BibFile -Destination $TempPath
+}
 
 # [+] Change Directory to Temporary Directory
 Set-Location -Path $TempPath
@@ -160,17 +186,32 @@ pandoc `
 # [+] Modify LaTeX File for References
 Write-Host ">> Modifying LaTeX File for References ..."
 
-awk '{sub(/]{article}/, "]{report}")}1' $TexFile > $tempTexFile
+# Make figures path relative
+awk '{sub(/\\includegraphics{.\//, "\\includegraphics{")}1' $TexFile > $tempTexFile
+Remove-Item $TexFile -Force
+Move-Item -Path $tempTexFile -Destination $TexFile
+awk '{sub(/\\includegraphics{/, "\\includegraphics{../")}1' $TexFile > $tempTexFile
 Remove-Item $TexFile -Force
 Move-Item -Path $tempTexFile -Destination $TexFile
 
-awk '{sub(/\\begin{document}/, "\\renewcommand{\\bibname}{References}\n\\begin{document}")}1' $TexFile > $tempTexFile
-Remove-Item $TexFile -Force
-Move-Item -Path $tempTexFile -Destination $TexFile
+if ($NoBib) {
+    Write-Host "No BibTeX file is provided."
+} else {
+    # Change document class
+    awk '{sub(/]{article}/, "]{report}")}1' $TexFile > $tempTexFile
+    Remove-Item $TexFile -Force
+    Move-Item -Path $tempTexFile -Destination $TexFile
 
-awk '{sub(/\\end{document}/, "\\bibliography{reference} % File: reference.bib\n\\bibliographystyle{unsrt}\n\\end{document}")}1' $TexFile > $tempTexFile
-Remove-Item $TexFile -Force
-Move-Item -Path $tempTexFile -Destination $TexFile
+    # Add reference functionality
+    awk '{sub(/\\begin{document}/, "\\renewcommand{\\bibname}{References}\n\\begin{document}")}1' $TexFile > $tempTexFile
+    Remove-Item $TexFile -Force
+    Move-Item -Path $tempTexFile -Destination $TexFile
+
+    # Add bibliography
+    awk '{sub(/\\end{document}/, "\\bibliography{reference} % File: reference.bib\n\\bibliographystyle{unsrt}\n\\end{document}")}1' $TexFile > $tempTexFile
+    Remove-Item $TexFile -Force
+    Move-Item -Path $tempTexFile -Destination $TexFile
+}
 
 # [+] Generate PDF with References
 Write-Host ">> Generating PDF with References ..."
@@ -181,13 +222,15 @@ If-Fail-Exit -Command "pdflatex $ProjName" -Message "3rd pdflatex run"
 
 # [+] Copy PDF to Output Directory
 Write-Host ">> Copying PDF to Output Directory ..."
-If-Fail-Exit -Command "cp reference.pdf ../$OutputDir/" -Message "Copying PDF to Output Directory"
+If-Fail-Exit -Command "cp $ProjName.pdf ../$OutputDir/" -Message "Copying PDF to Output Directory"
 
 # [+] Return to Original Directory
 Set-Location -Path $RootWorkingDirectory
 
 # [+] Remove Temporary Directory
-if ($RemoveTemp) {
+if ($NoRemoveTemp) {
+    Write-Host "NoRemoveTemp is set. Temporary directory is not removed."
+} else {
     Write-Host ">> Removing Temporary Directory ..."
     Remove-Item $TempPath -Force -Recurse
 }
