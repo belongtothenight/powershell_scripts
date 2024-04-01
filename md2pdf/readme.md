@@ -5,6 +5,7 @@ This script is used to convert markdown files to PDF with following features:
 1. Support for complex markdown tables.
 2. Support for non-ASCII characters.
 3. Support BibTex references.
+4. Special characters like `"`, `'` do not break the conversion.
 
 ## Dependencies
 
