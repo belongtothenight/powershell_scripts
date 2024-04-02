@@ -132,7 +132,7 @@ Write-Host "MD File:`t$MdFile"
 Write-Host "Output Dir:`t$OutputDir"
 Write-Host "Temp Path:`t$TempPath"
 Write-Host "Remove Temp:`t$NoRemoveTemp"
-Write-Host "No Bib:`t$NoBib"
+Write-Host "No Bib:`t`t$NoBib"
 
 # [+] Check Installation
 Write-Host ">> Checking Installation ..."
