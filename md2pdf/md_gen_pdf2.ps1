@@ -137,10 +137,10 @@ $RootWorkingDirectory = Get-Location
 $ProjName = [io.path]::GetFileNameWithoutExtension($MdFile)
 if ($NoBib) {
     $BibFile = $null
-} else {
-    if ($BibFile -eq $null) {
-        $BibFile = '{0}.bib' -f $ProjName
-    }
+}
+if ($BibFile -eq "") { # Equal to initialized empty string
+    Write-Host "No BibTeX file is provided, using default BibTeX file."
+    $BibFile = '{0}.bib' -f $ProjName
 }
 $tempMdFile = '{0}.tmp.md' -f $ProjName
 $TexFile = '{0}.tex' -f $ProjName
@@ -149,6 +149,7 @@ $tempTexFile = '{0}.tmp.tex' -f $ProjName
 # [+] Display Input Arguments
 Write-Host ">> Input Arguments:"
 Write-Host "MD File:`t$MdFile"
+Write-Host "Bib File:`t$BibFile"
 Write-Host "Output Dir:`t$OutputDir"
 Write-Host "Temp Path:`t$TempPath"
 Write-Host "Remove Temp:`t$NoRemoveTemp"
