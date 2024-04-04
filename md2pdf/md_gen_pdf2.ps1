@@ -12,6 +12,8 @@
     8. Remove the temporary directory.
 .PARAMETER MdFile
     The input Markdown file.
+.PARAMETER BibFile
+    The input BibTeX file. Default is "{ProjName}.bib".
 .PARAMETER OutputDir
     The output directory. Default is "pdf".
 .PARAMETER TempPath
@@ -22,14 +24,29 @@
     Whether to use BibTeX. Default is false.
 .EXAMPLE
     .\md_gen_pdf2.ps1 -MdFile "test.md"
+
+    Generate PDF from "test.md" with default settings and a BibTeX file "test.bib" exists.
+    Flag "-MdFile" is optional when the first argument is the input file.
+.EXAMPLE
+    .\md_gen_pdf2.ps1 test.md -BibFile reference.bib
+
+    Generate PDF from "test.md" with a BibTeX file "reference.bib".
 .EXAMPLE
     .\md_gen_pdf2.ps1 -MdFile "test.md" -OutputDir "pdf"
+
+    Generate PDF from "test.md" with the output directory set to "pdf".
 .EXAMPLE
-    .\md_gen_pdf2.ps1 -MdFile "test.md" -OutputDir "pdf" -TempPath "tmp"
+    .\md_gen_pdf2.ps1 -MdFile "test.md" -TempPath "tmp"
+
+    Generate PDF from "test.md" with the temporary directory set to "tmp".
 .EXAMPLE
-    .\md_gen_pdf2.ps1 -MdFile "test.md" -OutputDir "pdf" -NoRemoveTemp # If you want to keep the temporary directory.
+    .\md_gen_pdf2.ps1 -MdFile "test.md" -NoRemoveTemp
+
+    Generate PDF from "test.md" and keep the temporary directory and intermediate files.
 .EXAMPLE
     .\md_gen_pdf2.ps1 -MdFile "test.md" -OutputDir "pdf" -NoBib # If there is no BibTeX file.
+
+    Generate PDF from "test.md" without using BibTeX (if there is no BibTeX file) to skip file existence check.
 .NOTES
     File Name       : md_gen_pdf2.ps1
     Author          : belongtothenight
@@ -41,6 +58,7 @@
 # [+] Parameter Parsing
 param (
     [Parameter(Mandatory=$true)][string]$MdFile,
+    [string]$BibFile = $null,
     [string]$OutputDir = "pdf",
     [string]$TempPath = "tmp",
     [switch]$NoRemoveTemp,
@@ -120,7 +138,9 @@ $ProjName = [io.path]::GetFileNameWithoutExtension($MdFile)
 if ($NoBib) {
     $BibFile = $null
 } else {
-    $BibFile = '{0}.bib' -f $ProjName
+    if ($BibFile -eq $null) {
+        $BibFile = '{0}.bib' -f $ProjName
+    }
 }
 $tempMdFile = '{0}.tmp.md' -f $ProjName
 $TexFile = '{0}.tex' -f $ProjName
@@ -170,7 +190,11 @@ Set-Location -Path $TempPath
 
 # [+] Generate Intermediate Markdown File for better Table Handling
 Write-Host ">> Generating Intermediate Markdown File ..."
-pandoc -t markdown-pipe_tables-simple_tables-pipe_tables $MdFile -o $tempMdFile
+pandoc `
+    -t markdown-pipe_tables-simple_tables-pipe_tables $MdFile `
+    -o $tempMdFile `
+    #-V CJKmainfont="Noto Serif CJK SC" `
+    #--pdf-engine=xelatex
 Remove-Item $MdFile -Force
 mv $tempMdFile $MdFile
 
@@ -180,6 +204,8 @@ pandoc `
     -s $MdFile `
     -o $TexFile `
     -V geometry:margin=0.5in `
+    #-V CJKmainfont="Noto Serif CJK SC" `
+    #--pdf-engine=xelatex
 
 # [+] Modify LaTeX File for References
 Write-Host ">> Modifying LaTeX File for References ..."
