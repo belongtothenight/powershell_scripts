@@ -259,5 +259,5 @@ if ($NoRemoveTemp) {
     Remove-Item $TempPath -Force -Recurse
 }
 
-Write-Host ">> Generated PDF: $OutputDir/$ProjName.pdf"
+Write-Host ">> Generated PDF: `"$RootWorkingDirectory\$OutputDir\$ProjName.pdf`""
 Write-Host ">> Done."
