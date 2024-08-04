@@ -131,4 +131,13 @@ NOTES
     PS> dir
     markdown_contains_mermaid.md
     pdf/markdown_contains_mermaid.pdf
+
+
+
+
+
+
+
+RELATED LINKS
+    https://github.com/belongtothenight/powershell_scripts/blob/main/export_mermaid
 ```
