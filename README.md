@@ -13,3 +13,4 @@
 2. Pandoc auto-compile powershell script (Markdown to PDF): [./pandoc_md2pdf](./pandoc_md2pdf)
 3. Compile Markdown to PDF with better support for special characters and references: [./md2pdf](./md2pdf)
 4. Generate mermaid graph with Mermaid CLI: [./export_mermaid](./export_mermaid)
+5. Convert PDF to PNG with inkscape: [./inkscape_pdf2png](./inkscape_pdf2png)
