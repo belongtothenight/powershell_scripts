@@ -107,7 +107,7 @@ function Execute-Handle-Error {
     )
     $msg = "opt:       " + $opt; Write-Host $msg
     $msg = "Executing: " + $cmd; Write-Host $msg
-    #Invoke-Expression $cmd
+    Invoke-Expression $cmd
     if ($? -eq $false) {
         $msg = "Can't execute: " + $cmd; Write-Host $msg
     }
