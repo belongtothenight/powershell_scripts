@@ -1,5 +1,12 @@
 # powershell_scripts
 
+## System-wide Usage
+
+1. In windows search, search for "Edit the system environment variables"
+2. In opened "System Properties" window, click "Advanced/Environment Variables"
+3. In "System variables", click on "Path" and click on "Edit"
+4. Click "New" and paste in the root path of this repo.
+
 ## Repo Description
 
 1. LaTeX auto-compile powershell script (LaTex to PDF): [./latex_tex2pdf](./latex_tex2pdf)
