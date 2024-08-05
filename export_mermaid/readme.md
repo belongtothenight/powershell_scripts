@@ -1,5 +1,7 @@
 # Export Mermaid
 
+## Man
+
 ```
 SYNOPSIS
     Use Mermaid CLI to render mermaid graphs

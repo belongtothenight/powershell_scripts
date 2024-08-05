@@ -53,6 +53,8 @@
     Prerequisite    : PanDoc, Gawk, pdflatex, bibtex
     Date            : 2024-04-01
     Version         : 1.0
+.LINK
+    https://github.com/belongtothenight/powershell_scripts/tree/main/md2pdf
 #>
 
 # [+] Parameter Parsing

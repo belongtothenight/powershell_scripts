@@ -1,5 +1,7 @@
 # Process TeX
 
+## Man
+
 ```
 SYNOPSIS
     CLI tool to execute TeXworks typesettings.

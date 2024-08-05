@@ -27,6 +27,8 @@
     Notice       : If this script stucks at some point, try to press ctrl+c and restart it
     Notice       : First run of this script won't number references correctly, but it will re-run automatically.
 .LINK
+    https://github.com/belongtothenight/powershell_scripts/tree/main/latex_tex2pdf
+.LINK
     https://tex.stackexchange.com/questions/87319/how-to-run-tex-from-the-command-line-interface-in-linux
 .LINK
     https://stackoverflow.com/questions/49384301/make-clean-failed-in-windows

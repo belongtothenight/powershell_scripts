@@ -50,3 +50,90 @@ Notice, the sample tex file won't be able to compile since included image is not
     2. <https://www.cmor-faculty.rice.edu/~heinken/latex/symbols.pdf> 
     3. <http://www.cs.put.poznan.pl/ksiek/latexmath.html>
 4. Paper Referencing -> <https://research.com/research/how-to-cite-a-research-paper>
+
+## Man
+
+```
+SYNOPSIS
+    Generate a script to auto-compile LaTeX project
+
+
+SYNTAX
+    E:\GitHub\powershell_scripts\latex_tex2pdf\auto-compile.ps1 [-t] <Int32> [-o] <String> [[-m] <String>] [<CommonParameters>]
+
+
+DESCRIPTION
+    This script will automatically compile the LaTeX project, display the compiling time and the script running time.
+
+
+PARAMETERS
+    -t <Int32>
+        The time interval between each compile. Default is 5 seconds.
+
+        Required?                    true
+        Position?                    1
+        Default value                5
+        Accept pipeline input?       false
+        Accept wildcard characters?  false
+
+    -o <String>
+        The output file name. Default is "report".
+
+        Required?                    true
+        Position?                    2
+        Default value                report
+        Accept pipeline input?       false
+        Accept wildcard characters?  false
+
+    -m <String>
+        The makefile name. Default is "Makefile".
+
+        Required?                    false
+        Position?                    3
+        Default value                Makefile
+        Accept pipeline input?       false
+        Accept wildcard characters?  false
+
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216).
+
+INPUTS
+    None
+
+
+OUTPUTS
+    None
+
+
+NOTES
+
+
+        File Name    : auto-compile.ps1
+        Author       : belongtothenight
+        Prerequisite : make and latex compile environment
+        Date         : 2024-03-05
+        Notice       : This script is only for Windows PowerShell
+        Notice       : Running for a long time may cause memory leak
+        Notice       : Require Makefile and latex compile environment
+        Notice       : Loading PDF while compiling may cause error or segmentation fault
+        Notice       : If this script stucks at some point, try to press ctrl+c and restart it
+        Notice       : First run of this script won't number references correctly, but it will re-run automatically.
+
+    -------------------------- EXAMPLE 1 --------------------------
+
+    PS > .\auto-compile.ps1 -t 10 -o "report" -m "Makefile"
+
+
+
+
+
+
+
+RELATED LINKS
+    https://github.com/belongtothenight/powershell_scripts/tree/main/latex_tex2pdf
+    https://tex.stackexchange.com/questions/87319/how-to-run-tex-from-the-command-line-interface-in-linux
+    https://stackoverflow.com/questions/49384301/make-clean-failed-in-windows
+```

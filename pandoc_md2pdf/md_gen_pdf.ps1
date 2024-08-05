@@ -33,6 +33,8 @@
     pdf/server_mt.md.tmp (deleted)
     pdf/server.pdf
 .LINK
+    https://github.com/belongtothenight/powershell_scripts/tree/main/pandoc_md2pdf
+.LINK
     https://stackoverflow.com/questions/18178084/pandoc-and-foreign-characters
 .LINK
     https://stackoverflow.com/questions/2157554/how-to-handle-command-line-arguments-in-powershell
