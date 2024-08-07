@@ -103,7 +103,9 @@ Foreach-Object {
     $output_fn = [io.path]::GetFileNamewithoutExtension($filename)
     $output = $outdir + "\" + $output_fn
     $msg = "File " + $cnt.tostring() + " processing: " + $output + ".png"; Write-Host $msg
-    inkscape --export-background-opacity=$bo --export-dpi=$dpi --export-type=png --pages=$pages $file -o $output
+    $cmd = "inkscape --export-background-opacity=$bo --export-dpi=$dpi --export-type=png --pages=$pages `"$filename`" --export-filename `"$output`""
+    #Write-Host $cmd
+    Invoke-Expression $cmd
     if ($? -eq $false) {
         $msg = "Can't process: " + $file; Write-Host $msg
     }
