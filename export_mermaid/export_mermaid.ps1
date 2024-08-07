@@ -112,11 +112,13 @@ if ($trim) {
 } else {
     $tmp_str = "trim:      False"
 }
+echo $tmp_str
 if ($fontT) {
     $tmp_str = "fontT:     True"
 } else {
     $tmp_str = "fontT:     False"
 }
+echo $tmp_str
 
 #>> format output path
 $filename = (Get-Item $filename).FullName
