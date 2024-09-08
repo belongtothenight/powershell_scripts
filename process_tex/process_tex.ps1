@@ -28,18 +28,24 @@
         3. Dependency check
         4. Error handling
 .PARAMETER fn
-    Main file to process, mapped to "$fullname"
+    Main file to process, mapped to "$fullname".
     Does not require the file to be located in the same path as this script.
 .PARAMETER ts
-    Typesetting option from 1 to 17
+    Typesetting option from 1 to 17.
 .PARAMETER so
-    Mapped to "$synctexoption"
+    Mapped to "$synctexoption".
+    Sometimes additional flags are required to execute certain compilation.
 .INPUTS
     None
 .OUTPUTS
     None
 .EXAMPLE
-    PS> .\inkscape_pdf2png.ps1 -ts 9 -fn main.tex
+    PS> .\process_tex.ps1 -ts 9 -fn main.tex
+    PS> dir
+    main.tex
+    main.pdf
+.EXAMPLE
+    PS> .\process_tex.ps1 -fn main.tex -so "--tex-option -shell-escape"
     PS> dir
     main.tex
     main.pdf
@@ -120,7 +126,7 @@ Switch ($ts) {
         Execute-Handle-Error -opt "pdfLaTeX" -cmd "miktex-pdftex $so -undump=pdflatex $fn"
     }
     3 {
-        Execute-Handle-Error -opt "pdfLaTeX+MakeIndex+BibTeX" -cmd "texify --pdf --synctex=1 --clean $fn"
+        Execute-Handle-Error -opt "pdfLaTeX+MakeIndex+BibTeX" -cmd "texify --pdf --synctex=1 --clean $so $fn"
     }
     4 {
         Execute-Handle-Error -opt "LuaTeX" -cmd "miktex-luatex $so $fn"
@@ -129,7 +135,7 @@ Switch ($ts) {
         Execute-Handle-Error -opt "LuaLaTeX" -cmd "miktex-luahbtex $so --fmt=lualatex $fn"
     }
     6 {
-        Execute-Handle-Error -opt "LuaLaTeX+MakeIndex+BibTeX" -cmd "texify --pdf --engine=luahbtex --synctex=1 --clean $fn"
+        Execute-Handle-Error -opt "LuaLaTeX+MakeIndex+BibTeX" -cmd "texify --pdf --engine=luahbtex --synctex=1 --clean $so $fn"
     }
     7 {
         Execute-Handle-Error -opt "XeTeX" -cmd "miktex-xetex $so $fn"
@@ -138,7 +144,7 @@ Switch ($ts) {
         Execute-Handle-Error -opt "XeLaTeX" -cmd "miktex-xetex $so -undump=xelatex $fn"
     }
     9 {
-        Execute-Handle-Error -opt "XeLaTeX+MakeIndex+BibTeX" -cmd "texify --pdf --engine=xetex --synctex=1 --clean $fn"
+        Execute-Handle-Error -opt "XeLaTeX+MakeIndex+BibTeX" -cmd "texify --pdf --engine=xetex --synctex=1 --clean $so $fn"
     }
     10 {
         Execute-Handle-Error -opt "upTeX (ptex2pdf)" -cmd "ptex2pdf -u -ot $so $fn"
@@ -147,22 +153,22 @@ Switch ($ts) {
         Execute-Handle-Error -opt "upLaTeX (ptex2pdf)" -cmd "ptex2pdf -l -u -ot $so $fn"
     }
     12 {
-        Execute-Handle-Error -opt "ConTeXt (LuaTeX)" -cmd "context --synctex $fn"
+        Execute-Handle-Error -opt "ConTeXt (LuaTeX)" -cmd "context --synctex $so $fn"
     }
     13 {
-        Execute-Handle-Error -opt "ConTeXt (pdfTeX)" -cmd "texexec --synctex $fn"
+        Execute-Handle-Error -opt "ConTeXt (pdfTeX)" -cmd "texexec --synctex $so $fn"
     }
     14 {
-        Execute-Handle-Error -opt "ConTeXt (XeTeX)" -cmd "texexec --synctex --xtx $fn"
+        Execute-Handle-Error -opt "ConTeXt (XeTeX)" -cmd "texexec --synctex --xtx $so $fn"
     }
     15 {
-        Execute-Handle-Error -opt "BibTeX" -cmd "miktex-bibtex $bn"
+        Execute-Handle-Error -opt "BibTeX" -cmd "miktex-bibtex $so $bn"
     }
     16 {
-        Execute-Handle-Error -opt "Biber" -cmd "biber $bn"
+        Execute-Handle-Error -opt "Biber" -cmd "biber $so $bn"
     }
     17 {
-        Execute-Handle-Error -opt "MakeIndex" -cmd "miktex-makeindex $bn"
+        Execute-Handle-Error -opt "MakeIndex" -cmd "miktex-makeindex $so $bn"
     }
     default {
         $msg = "Invalid ts: " + $ts; Write-Host $msg
